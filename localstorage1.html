@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Localstorage</title>
+</head>
+
+<body>
+    <style>
+        .body {
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            display: flex;
+            align-items: center;
+            flex-direction: column;
+            justify-content: center;
+            text-align: center;
+        }
+
+        .link {
+            margin-bottom: 1rem;
+        }
+
+        .image_field {
+            height: 210px;
+            margin-top: 20px;
+        }
+        .custom_btn{
+            margin-top: 10px;
+            
+        }
+       
+    </style>
+
+
+    <div class="container">
+
+        <!--------------------------------For Link------------------------>
+        <div class="link">
+            <h1>Put Link Here.</h1>
+            <div class="input_field">
+                <div>
+                    <input style="padding: 10px 30px; border-radius: 2rem;" type="text" name="" id="link" autocomplete="off">
+                </div>
+                <div class="custom_btn">
+                    <input style="padding: 10px 30px; border-radius: 2rem;" value="Show" onclick="my_function()" type="button">
+                </div>
+            </div>
+            <div class="image_field">
+                <div id="image">
+
+                </div>
+            </div>
+        </div>
+
+        <!----------------------------For File ------------------------->
+        <div class="file">
+            <h1>Choose File Here.</h1>
+            <div class="input_fild">
+                <input style="padding-left:4rem;" type="file" name="" id="inp-file">
+            </div>
+            <div class="image_field">
+                <div id="file_image">
+
+                </div>
+            </div>
+        </div>
+
+
+
+    </div>
+
+
+
+
+
+
+    <script>
+        //For Link
+        if (localStorage.url) {
+            var b = document.getElementById("image");
+            var img = localStorage.getItem("url");
+            b.innerHTML = `<img src="${img}" height="200px"   alt="">`;
+        }
+
+        const my_function = () => {
+            var a = document.getElementById("link").value;
+            if (a != "") {
+                localStorage.setItem("url", `${a}`);
+                var b = document.getElementById("image");
+                var img = localStorage.getItem("url");
+                b.innerHTML = `<img src="${img}" height="200px"  alt="">`;
+
+            }
+        };
+
+
+
+        //For File
+        if (localStorage.file_img) {
+            var k = document.getElementById("file_image");
+            var preimg = localStorage.getItem("file_img");
+            k.innerHTML = `<img src="${preimg}" alt="" height="200px">`;
+        }
+        document.getElementById("inp-file").addEventListener("change", function () {
+            const reader = new FileReader();
+
+            reader.addEventListener("load", () => {
+                localStorage.setItem("file_img", reader.result);
+            });
+
+
+            reader.readAsDataURL(this.files[0]);
+            var c = document.getElementById("file_image");
+            var image = localStorage.getItem("file_img");
+            c.innerHTML = `<img src="${image}" alt="" class="media_file" height="200px">`;
+        });
+    </script>
+</body>
+
+</html>
